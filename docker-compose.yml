@@ -4,9 +4,9 @@ services:
     build: ./app
     image: 992382460915.dkr.ecr.us-east-2.amazonaws.com/workshop2:workshop2_web
     command: gunicorn nc_tutorials.wsgi:application --bind 0.0.0.0:8000
-    volumes:
-      - ./app/:/usr/src/app/
-      - static_volume:/usr/src/app/static
+    # volumes:
+    #   - ./app/:/usr/src/app/
+    #   - static_volume:/usr/src/app/static
     expose:
       - 8000
     environment:
@@ -21,4 +21,12 @@ services:
   nginx:
     build: ./nginx
     image: 992382460915.dkr.ecr.us-east-2.amazonaws.com/workshop2:workshop2_nginx
-    vol
+    # volumes:
+    #   - static_volume:/usr/src/app/static
+    ports:
+      - 8000:80
+    depends_on:
+      - web
+
+# volumes:
+#   static_volume:
